@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBCRS - Farmer Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <img src="Logo.png" alt="NBCRS Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="crops.html">Important Crops</a></li>
+                    <li><a href="news.html">Latest News</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Profile Section -->
+            <div class="profile-section">
+                <h2>Farmer Profile</h2>
+                <div class="profile-info">
+                    <div class="profile-pic"></div>
+                    <div class="details">
+                        <h2 id="profile-name">Name</h2>
+                        <p><strong>Worker Status:</strong> <span id="status" class="active">Active</span></p>
+                        <p><strong>Enroll ID:</strong> <span id="enrollId">Enroll ID</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sensor Data Section -->
+            <div class="sensor-grid">
+                <h2>Soil Health Data</h2>
+                <div class="sensor-data">
+                    <div class="chart-container">
+                        <canvas id="tdsChart"></canvas>
+                        <p>TDS Level</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="temperatureChart"></canvas>
+                        <p>Temperature</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="moistureChart"></canvas>
+                        <p>Moisture</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Section -->
+            <div class="news-section">
+                <h2>Latest Agriculture News</h2>
+                <div id="news-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Function to get URL parameters
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                  results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        const name = getParameterByName('name');
+
+        if (name) {
+            database.ref("farmers").orderByChild("name").equalTo(name).once("value", snapshot => {
+                if (snapshot.exists()) {
+                    snapshot.forEach(childSnapshot => {
+                        const data = childSnapshot.val();
+                        document.getElementById('profile-name').innerText = data.name;
+                        document.getElementById('enrollId').innerText = data.enrollId;
+                        document.getElementById('status').innerText = data.status;
+                    });
+                } else {
+                    alert('No records found.');
+                }
+            }).catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        }
+
+        // Chart Data
+        function createChart(canvasId, value, label) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [label, "Remaining"],
+                    datasets: [{
+                        data: [value, 100 - value],
+                        backgroundColor: ["#3498db", "#ecf0f1"]
+                    }]
+                }
+            });
+        }
+
+        // Fetch Sensor Data
+        database.ref('sensorData').on('value', snapshot => {
+            const data = snapshot.val();
+            createChart("tdsChart", data.tds, "TDS");
+            createChart("temperatureChart", data.temperature, "Temperature");
+            createChart("moistureChart", data.moisture, "Moisture");
+        });
+
+        // Fetch Latest News
+        fetch("https://newsapi.org/v2/everything?q=agriculture&apiKey=YOUR_NEWS_API_KEY")
+            .then(response => response.json())
+            .then(data => {
+                let newsHtml = "";
+                data.articles.slice(0, 5).forEach(article => {
+                    newsHtml += `<p><a href="${article.url}" target="_blank">${article.title}</a></p>`;
+                });
+                document.getElementById('news-container').innerHTML = newsHtml;
+            })
+            .catch(error => console.error("Error fetching news:", error));
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar .logo {
+            width: 100%;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar nav ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+        }
+
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .profile-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            background: gray;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .sensor-grid {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sensor-data {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .chart-container {
+            width: 150px;
+            text-align: center;
+        }
+
+        .news-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #news-container {
+            padding-top: 10px;
+        }
+    </style>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBCRS Profile</title>
+    <link rel="stylesheet" href="page2.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+    <div id="google_translate_element"></div>
+    <script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,hi',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false // Disable the automatic display of the translation banner
+        }, 'google_translate_element');
+    }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <div id="root"></div>
+    <div class="container">
+        <div class="sidebar">
+            <img src="Logo.png" alt="Coal India Logo" class="logo">
+            <!-- <div class="footer">
+                <p><a href="updates.html" class="sidebar-link">UPDATES</a></p>
+                <br>
+
+                <p><a href="attendance.html" class="sidebar-link">ATTENDANCE</a></p>
+                <br>
+                
+                <p><a href="holiday.html" class="sidebar-link">HOLIDAYS</a></p>
+            </div> -->
+        </div>
+        
+        <div class="content">
+            <div class="profile-summary">
+                <h2>Profile Summary</h2>
+            </div>
+            
+            <div class="main-content">
+                <div class="profile-info">
+                    <div class="profile-pic"></div>
+                    <div class="details">
+                        <h2 id="profile-name">Name</h2>
+                        <p><strong>Worker Status:</strong> <span id="status" class="active">Active</span></p>
+                        <p><strong>Enroll ID:</strong> <span id="enrollId">Enroll ID</span></p>
+                        <!-- <p><strong>Department:</strong> <span id="position">Position</span></p>
+                        <p><strong>Site of Work:</strong> <span id="site">Site</span></p> -->
+                    </div>
+                </div>
+                <!-- <div class="buttons">
+                    <a href="newlay.html" class="shift-handover" onclick="shiftHandover()">Shift Handover</a>
+                    <a href="new.html" class="safety-management" onclick="safetyManagement()">Safety Management</a>
+                </div> -->
+            </div>
+
+            <!-- <div class="task-section">
+                <h3>Tasks</h3>
+                <ul>
+                    <li class="urgent">Urgent Task 1: Inspect equipment in section A</li>
+                    <li class="delegate">Delegate Task 1: Assign team to clean area B</li>
+                    <li>Task 1: Complete daily safety report</li>
+                    <li>Task 2: Review shift handover notes</li>
+                </ul>
+            </div> -->
+
+            <!-- Alert Section -->
+            <!-- <div class="alert-section">
+                <h3>Alerts</h3>
+                <ul id="alert-list">
+                </ul>
+            </div> -->
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBZbkbWTlYtScXenDL9n-CgYSNluFtRf9E",
+            authDomain: "dataadd-8cf4f.firebaseapp.com",
+            databaseURL: "https://dataadd-8cf4f-default-rtdb.firebaseio.com",
+            projectId: "dataadd-8cf4f",
+            storageBucket: "dataadd-8cf4f.appspot.com",
+            messagingSenderId: "163416489588",
+            appId: "1:163416489588:web:d786217186f5e6ebe01b21",
+            measurementId: "G-W8YZ1PKF5X"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Function to get URL parameters
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                  results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        const name = getParameterByName('name');
+
+        // Fetch data based on identifier
+        if (name) {
+            database.ref("dataform").orderByChild("name").equalTo(name).once("value", snapshot => {
+                if (snapshot.exists()) {
+                    snapshot.forEach(childSnapshot => {
+                        const data = childSnapshot.val();
+                        document.getElementById('profile-name').innerText = data.name;
+                        document.getElementById('enrollId').innerText = data.enrollId;
+                        document.getElementById('position').innerText = data.position;
+                        document.getElementById('site').innerText = data.site;
+                        document.getElementById('status').innerText = data.status;
+                    });
+                } else {
+                    alert('No records found.');
+                }
+            }).catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        } else {
+            alert('No identifier provided.');
+        }
+
+        // Load and display alerts
+        function loadAlerts() {
+            const alertsRef = database.ref('alerts');
+            alertsRef.on('value', (snapshot) => {
+                const alerts = snapshot.val();
+                const alertList = document.getElementById('alert-list');
+                alertList.innerHTML = ''; // Clear existing alerts
+
+                if (alerts) {
+                    for (const key in alerts) {
+                        const alert = alerts[key];
+                        const li = document.createElement('li');
+                        li.classList.add('urgent'); // Add class based on alert type
+                        li.innerHTML = `
+                            <strong>${alert.title}</strong>
+                            <p>${alert.message}</p>
+                            <button class="dismiss-btn" onclick="dismissAlert('${key}')">x</button>
+                        `;
+                        alertList.appendChild(li);
+                    }
+                } else {
+                    console.log('No alerts available');
+                }
+            });
+        }
+
+        // Dismiss an alert
+        function dismissAlert(alertId) {
+            const alertRef = database.ref('alerts/' + alertId);
+            alertRef.remove()
+                .then(() => {
+                    console.log('Alert dismissed');
+                    // Reload alerts to reflect changes
+                    loadAlerts();
+                })
+                .catch((error) => {
+                    console.error('Error removing alert: ', error);
+                });
+        }
+
+        // Add a new alert
+        function addAlert(title, message) {
+            const alertsRef = database.ref('alerts');
+            const newAlertRef = alertsRef.push();
+            newAlertRef.set({
+                title: title,
+                message: message,
+                timestamp: new Date().toISOString()
+            });
+        }
+
+        // Example usage of addAlert
+        // addAlert('Safety Check', 'Please review the safety procedures.');
+
+        // Load data when the page loads
+        window.onload = function() {
+            loadAlerts();
+        };
+    </script>
+</body>
+</html>

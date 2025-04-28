@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexboard - Safety Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="google_translate_element"></div>
+        <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+        </script>
+        <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- Top Bar with Login Details and Go Back Button -->
+    <div class="top-bar">
+        <a href="page2.html"
+        button class="go-back-button" onclick="goBack()">&#9664; Go Back</button></a>
+        <div class="login-info">
+             <strong></strong>
+        </div>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Safety Management Heading at the Top -->
+    <div class="header">
+        <h1>Safety Management</h1>
+        <h2>Under DGMS Guidelines</h2>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <!-- Bullet Points Section inside a box and draggable with animation -->
+            <div class="box">
+                <ul id="draggable-list">
+                    <li draggable="true"><a href="#safety-training">Ensure all employees have completed safety training.</a></li>
+                    <li draggable="true"><a href="#inspect-equipment">Regularly inspect safety equipment and replace as necessary.</a></li>
+                    <li draggable="true"><a href="#safety-drills">Conduct monthly safety drills for fire and earthquake preparedness.</a></li>
+                    <li draggable="true"><a href="#workspace-maintenance">Maintain a clean and organized workspace to prevent accidents.</a></li>
+                    <li draggable="true"><a href="#incident-reporting">Report and document all incidents immediately.</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button Box at the Bottom -->
+    <div class="button-box">
+        <a href="http://www.ismenvis.nic.in/Database/Mining_Accidents_in_India_24483.aspx"
+        button onclick="location.href='#past-reports'">Past Reports</button></a>
+        <button onclick="location.href='#latest-reports'">Latest Reports</button>
+        <a href="https://docs.google.com/document/d/1yKGdlR-f_0Es_KPplbGagiN0gbisJxPs6AfrJtnZBNw/edit?usp=sharing"
+        button onclick="location.href='#add-reports'">Add Reports</button></a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

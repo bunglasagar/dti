@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Dashboard</title>
+    <link rel="stylesheet" href="page2.css">
+    <style>
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Left Sidebar */
+        .left-sidebar {
+            width: 300px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-sidebar h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .news-list, .crops-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .news-list li, .crops-list li {
+            background: #ffffff;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Main Content */
+        .content {
+            flex-grow: 1;
+        }
+
+        /* Profile Section */
+        .profile-summary {
+            background: white;
+            top: 30px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            position: relative;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            background: #ccc;
+            border-radius: 50%;
+            margin-right: 20px;
+            position: relative;
+        }
+
+        .profile-pic:hover .edit-btn {
+            display: block;
+        }
+
+        /* Edit Button for Profile Picture */
+        .edit-btn {
+            display: none;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Edit Button for Profile Section */
+        .edit-section-btn {
+            display: none;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Show Edit Button on Hover of Profile Section */
+        .profile-summary:hover .edit-section-btn {
+            display: block;
+        }
+
+        /* Geo-location Box */
+        .geo-location {
+            position: absolute;
+            top: 0;
+            right: -5px; 
+            font-size: 14px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sensor Data Circle Shape */
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 70px;
+            left: 50px;
+        }
+
+        .sensor-box {
+            width: 200px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+        }
+
+        .tds { background: red; }
+        .temperature { background: blue; }
+        .moisture { background: green; }
+
+        /* Updates Section */
+        .updates-section {
+            margin-top: 30px;
+            padding: 15px;
+            border: 2px solid black;
+            background: #f3f3f3;
+            border-radius: 10px;
+        }
+
+        /* Header Styles for Back Button */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            /* background-color: #007bff; */
+            color: white;
+            border-radius: 5px;
+        }
+
+        .back-btn {
+            background-color: #ffffff;
+            color: #007bff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .right-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ffffff;
+            color: #007bff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .back-btn:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div id="google_translate_element"></div>
+    <script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,hi',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Header with Back Button -->
+    <div class="header">
+        <button class="back-btn" onclick="window.history.back()">Back</button>
+        <!-- <h1>Farmer Dashboard</h1> -->
+    </div>
+    <a href="about.html"><button class="right-button">About us</button></a>
+
+
+    <div class="main-container">
+        <!-- Left Sidebar (News & Important Crops) -->
+        <div class="left-sidebar">
+            <h3>🌱 Important Crops</h3>
+            <ul class="crops-list" id="crops-list">
+                <li>Wheat 🌾</li>
+                <li>Rice 🍚</li>
+                <li>Maize 🌽</li>
+                <li>Potato 🥔</li>
+                <li>Sugarcane 🍬</li>
+            </ul>
+
+            <h3>📰 Agriculture News</h3>
+            <ul class="news-list" id="news-list">
+                <li>Government launches new subsidy for organic farming.</li>
+                <li>Heavy rains expected in the upcoming monsoon season.</li>
+                <li>New high-yield wheat variety introduced.</li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <div class="profile-summary">
+                <h2>Profile Summary</h2>
+                <div class="profile-info">
+                    <div class="profile-pic">
+                        <img id="profile-image" src="default.png" alt="Profile Photo" width="150" height="150">
+                        <button class="edit-btn" onclick="window.location.href='edit1.html';">✏️</button>
+                    </div>                
+                    <div class="details">
+                        <h2 id="profile-name">Farmer Name</h2>
+                        <p><strong>Status:</strong> <span id="status" class="active">Active</span></p>
+                        <p><strong>Enroll ID:</strong> <span id="enrollId">Enroll ID</span></p>
+                    </div>
+                </div>
+                <!-- Geo-location Box Outside Profile -->
+                <div id="geo-location" class="geo-location">Fetching location...</div>
+                <!-- Edit Button for Profile Section -->
+                <!-- Profile Section Edit Button with Redirect -->
+                <button class="edit-section-btn" onclick="window.location.href='edit2.html';">✏️</button>
+            </div>
+
+            <!-- Sensor Data Grid -->
+            <div class="sensor-grid">
+                <div class="sensor-box tds">
+                    <h3>TDS</h3>
+                    <p id="tds-value">- 500 PPM</p>
+                </div>
+
+                <div class="sensor-box temperature">
+                    <h3>Temperature</h3>
+                    <p id="temperature-value">- 35 °C</p>
+                </div>
+
+                <div class="sensor-box moisture">
+                    <h3>Moisture</h3>
+                    <p id="moisture-value">- 50%</p>
+                </div>
+            </div>
+
+            <!-- Farm Updates Section -->
+            <div class="updates-section">
+                <h3>Latest Crop Recommendations</h3>
+                <ul id="farm-updates">
+                    <li>Fetching updates...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Integration -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBZbkbWTlYtScXenDL9n-CgYSNluFtRf9E",
+            authDomain: "dataadd-8cf4f.firebaseapp.com",
+            databaseURL: "https://dataadd-8cf4f-default-rtdb.firebaseio.com",
+            projectId: "dataadd-8cf4f",
+            storageBucket: "dataadd-8cf4f.appspot.com",
+            messagingSenderId: "163416489588",
+            appId: "1:163416489588:web:d786217186f5e6ebe01b21",
+            measurementId: "G-W8YZ1PKF5X"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Function to get URL parameters
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                  results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        const name = getParameterByName('name');
+
+        // Fetch data based on identifier
+        if (name) {
+    database.ref("dataform").orderByChild("name").equalTo(name).once("value", snapshot => {
+        if (snapshot.exists()) {
+            snapshot.forEach(childSnapshot => {
+                const data = childSnapshot.val();
+
+                // Updating text fields
+                document.getElementById('profile-name').innerText = data.name;
+                document.getElementById('enrollId').innerText = data.enrollId;
+                document.getElementById('position').innerText = data.position;
+                document.getElementById('site').innerText = data.site;
+                document.getElementById('status').innerText = data.status;
+
+                // Fetching profile picture from Firebase Storage
+                if (data.profilePic) {  // Check if profilePic exists in database
+                    storage.ref(data.profilePic).getDownloadURL()
+                        .then(url => {
+                            document.getElementById('profile-image').src = url; // Set profile image
+                        })
+                        .catch(error => {
+                            console.error("Error fetching profile picture:", error);
+                            document.getElementById('profile-image').src = 'default.png'; // Fallback to default
+                        });
+                } else {
+                    document.getElementById('profile-image').src = 'default.png'; // Set default if no profile pic
+                }
+            });
+        } else {
+            alert('No records found.');
+        }
+    }).catch(error => {
+        console.error('Error fetching data:', error);
+    });
+} else {
+    alert('No identifier provided.');
+}
+
+
+        // Load and display alerts
+        function loadAlerts() {
+            const alertsRef = database.ref('alerts');
+            alertsRef.on('value', (snapshot) => {
+                const alerts = snapshot.val();
+                const alertList = document.getElementById('alert-list');
+                alertList.innerHTML = ''; // Clear existing alerts
+
+                if (alerts) {
+                    for (const key in alerts) {
+                        const alert = alerts[key];
+                        const li = document.createElement('li');
+                        li.classList.add('urgent'); // Add class based on alert type
+                        li.innerHTML = `
+                            <strong>${alert.title}</strong>
+                            <p>${alert.message}</p>
+                        `;
+                        alertList.appendChild(li);
+                    }
+                } else {
+                    alertList.innerHTML = 'No alerts at the moment.';
+                }
+            });
+        }
+        loadAlerts();
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                document.getElementById("geo-location").innerText = `Location: ${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
+            }, function(error) {
+                document.getElementById("geo-location").innerText = "Location: Not Available";
+            });
+        } else {
+            document.getElementById("geo-location").innerText = "Location: Not Supported";
+        }
+    </script>
+</body>
+</html>

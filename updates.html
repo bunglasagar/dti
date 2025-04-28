@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coal Mines of India - Daily Updates</title>
+    <style>
+ /* General Body Styling */
+/* General Body Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('coalindiabg.jpeg'); /* Add your background image here */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    color: #333;
+}
+
+/* Overlay Effect for Better Readability */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for readability */
+    z-index: -1; /* Ensures this is behind all content */
+}
+
+/* Container Styling */
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading Styling */
+h1 {
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* Update Section Styling */
+.update {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-left: 6px solid #007bff;
+    background-color: #ffffff;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.update:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+/* Title Styling */
+.update h2 {
+    font-size: 22px;
+    color: #007bff;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Content Styling */
+.update p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+/* Date and Time Styling */
+.update .date {
+    font-size: 14px;
+    color: #888;
+    font-style: italic;
+}
+
+/* Labor Data Styling */
+.labor-data {
+    font-size: 16px;
+    color: #333;
+    margin-top: 15px;
+    background-color: #e7f1ff;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+/* New Sections Styling */
+.mine-data {
+    margin-top: 20px;
+}
+
+.section-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.section-content {
+    font-size: 16px;
+    color: #555;
+    background-color: #f4f4f4;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid #007bff;
+}
+
+/* Responsive Styling */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .update {
+        padding: 15px;
+    }
+
+    .update h2 {
+        font-size: 20px;
+    }
+
+    .update p,
+    .labor-data,
+    .section-content {
+        font-size: 14px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div id="google_translate_element"></div>
+    <script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,hi',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false // Disable the automatic display of the translation banner
+        }, 'google_translate_element');
+    }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <div class="container">
+        <h1>Daily Updates on Coal Mines of India</h1>
+        
+        <!-- Updates will be dynamically inserted here -->
+        <div id="updates-container">
+            <!-- Example of a static update (will be replaced dynamically) -->
+            <div class="update">
+                <h2>Example Update</h2>
+                <p>This is a static example update. Real updates will be fetched dynamically.</p>
+                <p class="date">Date: August 31, 2024</p>
+                <div class="labor-data">
+                    <p>Number of Workers: 2000</p>
+                    <p>Work Safety Training: Completed</p>
+                </div>
+                <div class="mine-data">
+                    <h3 class="section-title">Production Data</h3>
+                    <div class="section-content">
+                        <p>Total Production: 5000 tons</p>
+                        <p>Monthly Production Increase: 5%</p>
+                    </div>
+                    <h3 class="section-title">Environmental Impact</h3>
+                    <div class="section-content">
+                        <p>Air Quality Index: Moderate</p>
+                        <p>Water Usage: 2000 cubic meters</p>
+                    </div>
+                    <h3 class="section-title">Community Engagement</h3>
+                    <div class="section-content">
+                        <p>Community Projects: 3 ongoing projects</p>
+                        <p>Health and Safety Workshops: 2 conducted last month</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to Fetch and Update Content -->
+    <script src="updates.js"></script>
+</body>
+</html>

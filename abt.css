@@ -1,0 +1,116 @@
+/* Apply Gradient Background */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #4CAF50, #2196F3);
+    color: white;
+}
+
+/* Header Styling */
+header {
+    position: relative;
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #2E7D32, #1565C0);
+    color: white;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+header .overlay {
+    max-width: 800px;
+    margin: auto;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.2rem;
+}
+
+/* About Section */
+.about, .services, .team {
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #1B5E20, #0D47A1);
+    border-radius: 10px;
+    margin: 30px auto;
+    max-width: 80%;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #FFEB3B; /* Highlighted text */
+}
+
+/* Service Section */
+.service-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.service-box {
+    background: linear-gradient(135deg, #388E3C, #1976D2);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    color: white;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.service-box:hover {
+    transform: scale(1.05);
+}
+
+.service-box i {
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: #FFEB3B;
+}
+
+/* Team Section */
+.team-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.team-member {
+    background: linear-gradient(135deg, #43A047, #1E88E5);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 250px;
+    color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.team-member:hover {
+    transform: scale(1.05);
+}
+
+.team-member img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid white;
+    margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #1B5E20, #0D47A1);
+    color: white;
+}

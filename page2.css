@@ -1,0 +1,235 @@
+/* Reset default margin, padding, and box-sizing for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('Back3.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #333;
+}
+
+/* Container for layout */
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #f6f9fc, #e9effd);
+    padding: 20px;
+    border-radius: 15px;
+    margin-right: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo styling */
+.logo {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+    border-radius: 5%;
+    border: 2px solid #2196F3;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer styling */
+.footer {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Footer paragraph styling */
+.footer p {
+    margin: 10px 0;
+}
+
+/* Update Section Links */
+.footer a {
+    display: block;
+    text-decoration: none;
+    color: #2196F3;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.footer a:hover {
+    color: #1e88e5;
+}
+
+/* Content styling */
+.content {
+    width: 75%;
+    padding-left: 20px;
+}
+
+/* Profile summary section */
+.profile-summary {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.profile-summary h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 2px solid #2196F3;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* Profile info styling */
+.profile-info {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    margin-right: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.details {
+    flex: 1;
+}
+
+.details h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.details p {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.details span {
+    font-weight: bold;
+}
+
+/* Button styling */
+.buttons a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(135deg, #2196F3, #21CBF3);
+    transition: background 0.3s ease;
+}
+
+.buttons a:hover {
+    background: linear-gradient(135deg, #1e88e5, #1c9adb);
+}
+
+/* Task section styling */
+.task-section {
+    margin-top: 20px;
+}
+
+.task-section h3 {
+    font-size: 22px;
+    color: #333;
+    border-bottom: 2px solid #2196F3;
+    display: inline-block;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.task-section ul {
+    list-style-type: none;
+}
+
+.task-section ul li {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Urgent task styling */
+.task-section ul li.urgent {
+    border-left: 5px solid #d32f2f;
+    background-color: #ffe8e8;
+}
+
+/* Delegate task styling */
+.task-section ul li.delegate {
+    border-left: 5px solid #ff9800;
+    background-color: #fff8e1;
+}
+
+/* Alert section styling */
+.alert-section {
+    background-color: #ffebee;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.alert-section h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #d32f2f;
+}
+
+#alert-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#alert-list li {
+    background-color: #fff;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+#alert-list li .dismiss-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #d32f2f;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}

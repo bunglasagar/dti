@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #a9cff4; /* Fallback color */
+    background-image: url('bg1.png'); /* Add your background image URL here */
+    background-size: cover; /* Cover the entire header area */
+    background-position: center; /* Center the image */
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    color: #fff;
+}
+
+.header h1 {
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 5px rgba(26, 194, 236, 0.97);
+    margin: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.header h2 {
+    color: #e7e6ef;
+    font-size: 28px;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #f5df19;
+}
+h2 {
+    color: #1920f5;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #e6f7ff;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+li a {
+    text-decoration: none;
+    color: #004080;
+    font-weight: bold;
+}
+
+.back-to-top {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-to-top a {
+    text-decoration: none;
+    color: #004080;
+    font-weight: bold;
+}

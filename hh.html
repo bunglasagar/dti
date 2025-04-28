@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBCRS</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="about.html"><button class="right-button">About us</button></a>
+    <div class="container">
+        <header>
+            <h1 id="heading1">Welcome to NBCRS</h1>
+        </header>
+        <div class="content">
+            <div class="logo-container">
+                <img src="Logo.png" alt="Coal India Limited Logo" class="logo">
+            </div>
+            <div class="login-form">
+                <form id="loginForm">
+                    <h2>Login</h2>
+                    <input type="text" placeholder="Registration ID / Email / Phone" id="identifier" required>
+                    <input type="password" placeholder="Password" id="password" required>
+
+                    <!-- CAPTCHA -->
+                    <div class="g-recaptcha" data-sitekey="6LfEmNMqAAAAAGXl4J0UUCBg6izfYNcwxg4qSxTi" data-callback="enableSignIn"></div>
+
+                    <div class="remember-forgot">
+                        <label><input type="checkbox"> Remember me</label>
+                    </div>
+
+                    <!-- Sign In Button (Initially Disabled) -->
+                    <button type="submit" id="sign" disabled>Sign In</button>
+                </form>
+                <a href="register.html">
+                    <button type="button" id="register">Register</button>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBZbkbWTlYtScXenDL9n-CgYSNluFtRf9E",
+            authDomain: "dataadd-8cf4f.firebaseapp.com",
+            databaseURL: "https://dataadd-8cf4f-default-rtdb.firebaseio.com",
+            projectId: "dataadd-8cf4f",
+            storageBucket: "dataadd-8cf4f.appspot.com",
+            messagingSenderId: "163416489588",
+            appId: "1:163416489588:web:d786217186f5e6ebe01b21",
+            measurementId: "G-W8YZ1PKF5X"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Function to enable the Sign In button after CAPTCHA is solved
+        function enableSignIn() {
+            document.getElementById('sign').disabled = false;
+        }
+
+        // Form Submission Handler
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Check if CAPTCHA is completed
+            var captchaResponse = grecaptcha.getResponse();
+            if (!captchaResponse) {
+                alert("Please verify the CAPTCHA before signing in.");
+                return false;
+            }
+
+            const name = document.getElementById('identifier').value;
+            const password = document.getElementById('password').value;
+
+            db.ref('dataform').orderByChild('name').equalTo(name).once('value', snapshot => {
+                if (snapshot.exists()) {
+                    snapshot.forEach(childSnapshot => {
+                        const user = childSnapshot.val();
+                        if (user.pass === password) {
+                            // Redirect to page2.html with identifier in URL
+                            window.location.href = `dayy2.html?name=${encodeURIComponent(name)}`;
+                        } else {
+                            alert('Invalid password.');
+                        }
+                    });
+                } else {
+                    alert('User not found.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

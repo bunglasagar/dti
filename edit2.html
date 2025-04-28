@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .details-section {
+            margin-bottom: 20px;
+        }
+
+        .details-section p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="details-section">
+            <h2 id="profile-name">John Doe</h2>
+            <p><strong>Status:</strong> <span id="status">Active</span></p>
+            <p><strong>Enroll ID:</strong> <span id="enrollId">12345</span></p>
+        </div>
+
+        <button onclick="openEditProfileDetails()">Edit Profile Details</button>
+    </div>
+
+    <!-- Modal for Editing Profile Details -->
+    <div id="editProfileDetailsModal" style="display:none;">
+        <div class="profile-container">
+            <h3>Edit Profile Details</h3>
+            <form id="editProfileForm" onsubmit="submitProfileDetails(event)">
+                <label for="editName">Name:</label>
+                <input type="text" id="editName" value="John Doe">
+                
+                <label for="editStatus">Status:</label>
+                <input type="text" id="editStatus" value="Active">
+                
+                <label for="editEnrollId">Enroll ID:</label>
+                <input type="text" id="editEnrollId" value="12345">
+                
+                <button type="submit">Save Changes</button>
+                <button type="button" onclick="closeEditModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Open the Edit Profile Details modal
+        function openEditProfileDetails() {
+            document.getElementById('editProfileDetailsModal').style.display = 'block';
+        }
+
+        // Close the Edit Profile Details modal
+        function closeEditModal() {
+            document.getElementById('editProfileDetailsModal').style.display = 'none';
+        }
+
+        // Submit Profile Details Form
+        function submitProfileDetails(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('editName').value;
+            const status = document.getElementById('editStatus').value;
+            const enrollId = document.getElementById('editEnrollId').value;
+
+            // Update profile details (this could be saved to a server or database)
+            console.log('Updated Profile Details:', name, status, enrollId);
+
+            // Update displayed details
+            document.getElementById('profile-name').textContent = name;
+            document.getElementById('status').textContent = status;
+            document.getElementById('enrollId').textContent = enrollId;
+
+            // Close modal after saving
+            closeEditModal();
+            alert('Profile details updated!');
+        }
+    </script>
+</body>
+</html>

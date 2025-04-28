@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile Picture</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .profile-pic {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+        }
+
+        .edit-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            padding: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .preview-img {
+            display: none;
+            margin-top: 10px;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-pic" onclick="openEditProfilePic()">
+            <img src="https://via.placeholder.com/120" alt="Profile Picture" id="currentProfilePic">
+            <button class="edit-btn">✏️</button>
+        </div>
+        <input type="file" id="profilePicInput" accept="image/*" onchange="previewImage(event)" style="display:none;">
+        <button onclick="saveProfilePic()">Save Profile Picture</button>
+
+        <img id="previewImage" class="preview-img" src="" alt="Preview">
+    </div>
+
+    <script>
+        // Open file input when clicking on the profile picture
+        function openEditProfilePic() {
+            document.getElementById('profilePicInput').click();
+        }
+
+        // Show image preview
+        function previewImage(event) {
+            const preview = document.getElementById('previewImage');
+            const file = event.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Save the profile picture (this is a placeholder for actual saving logic)
+        function saveProfilePic() {
+            const fileInput = document.getElementById('profilePicInput');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newProfilePic = e.target.result;
+                    console.log("Profile picture saved:", newProfilePic);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("No image selected.");
+            }
+        }
+    </script>
+</body>
+</html>
